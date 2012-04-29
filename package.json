@@ -29,7 +29,7 @@
         "jsonify" : "0.0.x"
     },
     "devDependencies" : {
-        "tap" : "0.0.x"
+        "tap" : "~0.2.4"
     },
     "engines" : {
         "node" : ">=0.4.0"

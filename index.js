@@ -273,11 +273,17 @@ Stack.prototype.compile = function (context, opts) {
                     function (_, x) { return 'function ' + x }
                 );
                 
-                return 'function ' + name + '(' + vars + '){'
+                return '{'
+                    + 'function ' + name + '(' + vars + '){'
                     + ex(ix, 'return ' + names.fn
                         + '(' + ix + ',' + src + ').apply(this, arguments)'
                     )
-                + '}'
+                    + '}; '
+                    + name + '.toString = function () {'
+                        + 'return ' + JSON.stringify(s)
+                    + '}'
+                    + '};'
+                ;
             });
         }
     }

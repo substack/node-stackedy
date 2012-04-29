@@ -1,10 +1,12 @@
 var stackedy = require('../');
 var test = require('tap').test;
 
-var fs = require('fs');
 var src = '(' + function () {
     function plusTen () { return x + 10 };
-    t.equal(plusTen.toString(), 'function plusTen() { return x + 10 }');
+    t.equal(
+        plusTen.toString().replace(/\s+/g, ''),
+        'function plusTen () { return x + 10 }'.replace(/\s+/g, '')
+    );
 } + ')()';
 
 test('fn.toString()', function (t) {
