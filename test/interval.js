@@ -13,7 +13,7 @@ test('interval', function (t) {
     setTimeout(function () {
         stack.stop();
         x0 = context.exports.times;
-        t.ok(x0 >= 200 / 25 - 2 && x0 <= 200 / 25);
+        t.ok(x0 >= 200 / 25 - 2 && x0 <= 200 / 25 + 1);
     }, 200);
     
     setTimeout(function () {
