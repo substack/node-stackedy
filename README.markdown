@@ -4,6 +4,8 @@ stackedy
 Roll your own stack traces and control program execution through AST
 manipulation.
 
+[![build status](https://secure.travis-ci.org/substack/node-stackedy.png)](http://travis-ci.org/substack/node-stackedy)
+
 examples
 ========
 
