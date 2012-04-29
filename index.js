@@ -212,8 +212,8 @@ Stack.prototype.compile = function (context, opts) {
         + '}'
     };
     
-    function wrapper (filename, node) {
-        var wrapper_ = function (n) { return wrapper(filename, n) };
+    function wrapper (filename, node, source) {
+        var wrapper_ = function (n) { return wrapper(filename, n, source) };
         node.filename = filename;
         var ix = nodes.push(node) - 1;
         
@@ -256,6 +256,9 @@ Stack.prototype.compile = function (context, opts) {
         }
         else if (node.name === 'function') {
             node.functionName = burrito.label(node);
+            var original = 'function ' + source.slice(
+                node.start.pos, node.end.pos + 1
+            );
             node.wrap(function (s) {
                 var name = burrito.generateName(6);
                 return '(function () {'
@@ -265,7 +268,7 @@ Stack.prototype.compile = function (context, opts) {
                             + '.apply(this, arguments)'
                         ) + '};'
                     + name + '.toString = function () {'
-                        + 'return ' + JSON.stringify(s)
+                        + 'return ' + JSON.stringify(original)
                     + '};'
                     + 'return ' + name
                     + '})()'
@@ -276,6 +279,9 @@ Stack.prototype.compile = function (context, opts) {
             var name = node.value[0];
             var vars = node.value[1].join(',');
             node.functionName = name;
+            var original = 'function ' + source.slice(
+                node.start.pos, node.end.pos + 1
+            );
             
             node.wrap(function (s) {
                 var src = s.replace(
@@ -290,7 +296,7 @@ Stack.prototype.compile = function (context, opts) {
                     )
                     + '}; '
                     + name + '.toString = function () {'
-                        + 'return ' + JSON.stringify(s)
+                        + 'return ' + JSON.stringify(original)
                     + '}'
                     + '};'
                 ;
@@ -305,7 +311,7 @@ Stack.prototype.compile = function (context, opts) {
             try {
                 var src = burrito(
                     s.preFilter ? s.preFilter(s.source) : s.source,
-                    function (n) { return wrapper(s.filename, n) }
+                    function (n) { return wrapper(s.filename, n, s.source) }
                 );
                 xs.push(s.postFilter ? s.postFilter(src) : src);
             }

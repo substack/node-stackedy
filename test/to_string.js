@@ -49,7 +49,10 @@ test('expr fn toString()', function (t) {
     
     var stack = stackedy(src).run({
         log : function (msg) {
-            t.equal(msg, "function(win){console.log('window')}");
+            t.equal(
+                msg.replace(/\s+/g, ''),
+                "function (win) { console.log('window!') }".replace(/\s+/g, '')
+            );
         }
     });
     stack.on('error', function (err, c) {
