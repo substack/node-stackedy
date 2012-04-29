@@ -256,11 +256,21 @@ Stack.prototype.compile = function (context, opts) {
         }
         else if (node.name === 'function') {
             node.functionName = burrito.label(node);
-            node.wrap('(function () {'
-                + ex(ix, 'return ' + names.fn
-                    + '(' + ix + ',(%s)).apply(this, arguments)'
-                )
-            + '})');
+            node.wrap(function (s) {
+                var name = burrito.generateName(6);
+                return '(function () {'
+                    + 'var ' + name + ' = function () {'
+                        + ex(ix, 'return ' + names.fn
+                            + '(' + ix + ',' + s + ')'
+                            + '.apply(this, arguments)'
+                        ) + '};'
+                    + name + '.toString = function () {'
+                        + 'return ' + JSON.stringify(s)
+                    + '};'
+                    + 'return ' + name
+                    + '})()'
+                ;
+            });
         }
         else if (node.name === 'defun') {
             var name = node.value[0];
