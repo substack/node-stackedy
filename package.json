@@ -1,7 +1,7 @@
 {
     "name" : "stackedy",
     "description" : "Roll your own stack traces and control program execution through AST manipulation",
-    "version" : "0.1.8",
+    "version" : "0.1.9",
     "repository" : {
         "type" : "git",
         "url" : "git://github.com/substack/node-stackedy.git"
