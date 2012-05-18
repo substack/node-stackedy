@@ -268,7 +268,7 @@ Stack.prototype.compile = function (context, opts) {
                             + '.apply(this, arguments)'
                         ) + '};'
                     + name + '.toString = function () {'
-                        + 'return ' + JSON.stringify(original)
+                        + 'return ' + json.stringify(original)
                     + '};'
                     + 'return ' + name
                     + '})()'
@@ -296,7 +296,7 @@ Stack.prototype.compile = function (context, opts) {
                     )
                     + '}; '
                     + name + '.toString = function () {'
-                        + 'return ' + JSON.stringify(original)
+                        + 'return ' + json.stringify(original)
                     + '}'
                     + '};'
                 ;
